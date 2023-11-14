@@ -2,7 +2,13 @@ package model;
 
 import model.types.VehicleType;
 
+/**
+ * Creates object of boat vehicle type
+ */
 public class Boat extends Vehicle{
+    /**
+     * tells if the boat is with or without engine
+     */
     private boolean isWithEngine;
 
     public Boat(String name, VehicleType type, boolean isWithEngine) {
@@ -13,6 +19,7 @@ public class Boat extends Vehicle{
     public Boat() {
     }
 
+    //Setters and Getters
     public boolean isWithEngine() {
         return isWithEngine;
     }

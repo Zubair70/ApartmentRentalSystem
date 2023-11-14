@@ -3,10 +3,28 @@ package model;
 import model.types.GasType;
 import model.types.VehicleType;
 
+/**
+ * Creates object of car vehicle type
+ */
 public class Car extends Vehicle {
+    /**
+     * model of the car
+     */
     private String model;
+
+    /**
+     * seating capacity of the car
+     */
     private int seatingCapacity;
+
+    /**
+     * color the car
+     */
     private String color;
+
+    /**
+     * Gas type in the car
+     */
     private GasType gasType;
 
     public Car(String name, VehicleType type, String model, int seatingCapacity, String color, GasType gasType) {
@@ -20,6 +38,7 @@ public class Car extends Vehicle {
     public Car() {
     }
 
+    //Setters and Getters
     public String getModel() {
         return model;
     }

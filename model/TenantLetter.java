@@ -1,18 +1,34 @@
 package model;
 
+/**
+ * Tenant letter to be sent to the person
+ */
 public class TenantLetter {
 
+    /**
+     * unique identifier
+     */
     private int id;
+
+    /**
+     * content of the letter
+     */
     private String content;
 
-    public TenantLetter(int id, String content) {
-        this.id = id;
+    /**
+     * counter to generate unique id on object creation
+     */
+    private static int tenantLetterIdCounter = 0;
+
+    public TenantLetter(String content) {
+        id = ++tenantLetterIdCounter;
         this.content = content;
     }
 
     public TenantLetter() {
     }
 
+    //Setters and Getters
     public int getId() {
         return id;
     }

@@ -1,5 +1,8 @@
 package model.types;
 
+/**
+ * Types of properties that can be rented
+ */
 public enum PropertyType {
     APARTMENT("Apartment"), PARKING_SPACE("Parking Space");
 

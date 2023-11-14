@@ -1,20 +1,34 @@
 package model;
 
-public class Dimention extends Area{
+/**
+ * Dimension area type for the size of the room or parking space
+ */
+public class Dimension extends Area{
+
+    /**
+     * length of the room
+     */
     private double length;
+    /**
+     * width of the room
+     */
     private double width;
+    /**
+     * height of the room
+     */
     private double height;
 
-    public Dimention(String type, double length, double width, double height) {
+    public Dimension(String type, double length, double width, double height) {
         super(type);
         this.length = length;
         this.width = width;
         this.height = height;
     }
 
-    public Dimention() {
+    public Dimension() {
     }
 
+    //Setters and Getters
     public double getLength() {
         return length;
     }

@@ -2,8 +2,19 @@ package model;
 
 import model.types.VehicleType;
 
+/**
+ * Creates object of Motorcycle vehicle type
+ */
 public class Motorcycle extends Vehicle{
+
+    /**
+     * tells if the motorcycle is a heavy bike
+     */
     private boolean isHeavyBike;
+
+    /**
+     * engine size i.e. 150 CC or 180CC
+     */
     private String engineSize;
 
     public Motorcycle(String name, VehicleType type, boolean isHeavyBike, String engineSize) {
@@ -15,6 +26,7 @@ public class Motorcycle extends Vehicle{
     public Motorcycle() {
     }
 
+    //Setters and Getters
     public boolean isHeavyBike() {
         return isHeavyBike;
     }

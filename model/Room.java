@@ -39,7 +39,7 @@ public class Room {
     public Room() {
     }
 
-    //Setters and Getters for private instance variables
+    //Setters and Getters
     public int getId() {
         return id;
     }
