@@ -6,38 +6,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Apartment extends Property {
-    private List<Room> rooms;
+    private final List<Room> ROOMS;
 
     public Apartment(PropertyType type) {
         super(type);
-        new ArrayList<>();
+        ROOMS = new ArrayList<>();
     }
 
     public Apartment() {
-        new ArrayList<>();
+        ROOMS = new ArrayList<>();
     }
 
     public void addRoom(Room room) {
-        rooms.add(room);
+        ROOMS.add(room);
     }
 
     public void removeRoom(Room room) {
-        rooms.removeIf(letter -> letter.getId() == room.getId());
+        ROOMS.removeIf(letter -> letter.getId() == room.getId());
     }
 
     public Room getRoomByIndex(int index) {
-        return rooms.get(index);
+        return ROOMS.get(index);
     }
 
     public Room getRoomById(int id) {
-        return rooms.stream()
+        return ROOMS.stream()
                 .filter(letter -> letter.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     public List<Room> getRooms() {
-        return new ArrayList<>(rooms);
+        return new ArrayList<>(ROOMS);
     }
 
 }
