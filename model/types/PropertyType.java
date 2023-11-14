@@ -3,9 +3,9 @@ package model.types;
 public enum PropertyType {
     APARTMENT("Apartment"), PARKING_SPACE("Parking Space");
 
-    private String type;
+    private final String type;
 
-    private PropertyType(String type) {
+    PropertyType(String type) {
         this.type = type;
     }
 

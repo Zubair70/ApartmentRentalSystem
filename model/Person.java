@@ -1,6 +1,5 @@
 package model;
 
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private List<TenantLetter> tenantLetters;
+    private final List<TenantLetter> TENANT_LETTERS;
 
     private static int personIdCounter = 0;
 
@@ -18,11 +17,11 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        tenantLetters = new ArrayList<>();
+        TENANT_LETTERS = new ArrayList<>();
     }
 
     public Person() {
-        tenantLetters = new ArrayList<>();
+        TENANT_LETTERS = new ArrayList<>();
     }
 
     public int getId() {
@@ -54,25 +53,25 @@ public class Person {
     }
 
     public void addTenantLetter(TenantLetter tenantLetter) {
-        tenantLetters.add(tenantLetter);
+        TENANT_LETTERS.add(tenantLetter);
     }
 
     public void removeTenantLetter(TenantLetter tenantLetter) {
-        tenantLetters.removeIf(letter -> letter.getId() == tenantLetter.getId());
+        TENANT_LETTERS.removeIf(letter -> letter.getId() == tenantLetter.getId());
     }
 
     public TenantLetter getTenantLetterByIndex(int index) {
-        return tenantLetters.get(index);
+        return TENANT_LETTERS.get(index);
     }
 
     public TenantLetter getTenantLetterById(int id) {
-        return tenantLetters.stream()
+        return TENANT_LETTERS.stream()
                 .filter(letter -> letter.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<TenantLetter> getTenantLetters() {
-        return new ArrayList<>(tenantLetters);
+    public List<TenantLetter> getTENANT_LETTERS() {
+        return new ArrayList<>(TENANT_LETTERS);
     }
 }

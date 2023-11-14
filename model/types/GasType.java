@@ -3,9 +3,9 @@ package model.types;
 public enum GasType {
     GASOLINE("Gasoline"), DIESEL("Diesel");
 
-    private String type;
+    private final String type;
 
-    private GasType(String type) {
+    GasType(String type) {
         this.type = type;
     }
 
