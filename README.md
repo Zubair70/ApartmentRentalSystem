@@ -1,5 +1,5 @@
 # ApartmentRentalSystem
-Write a program, that will help developer manage multiple blocks containing finite number of apartments for rent. Each apartment or closed parking space might be rented by any number of people about whom information should be stored (Person class objects). But the first person who starts renting the apartment is always the person responsible for the rental fees.
+Write a program, that will help developer manage multiple blocks containing finite number of apartments for rent. Each apartment or closed parking space might be rented by any number of people about whom information should be stored (model.Person class objects). But the first person who starts renting the apartment is always the person responsible for the rental fees.
 
 As a part of the apartment rental it is possible (only if person is renting an apartment) to additionally rent a closed parking space, where you can store vehicles, but also various items. Each apartment and parking space has information about its usable area and a unique number thanks to which we can clearly define an object symbolizing an apartment or a parking space.
 
@@ -10,13 +10,13 @@ It should be ensured that the apartments and parking spaces are identifiers are 
 1. by specifying the volume in cubic meters 
 2. by specifying the dimensions of the room in the form of length, width and height of the room (for simplicity we assume that the room is a cuboid. In this approach, the usable volume of the room is calculated when creating the object based on the provided values)
 
-Apartments and parking spaces also have start and end date of rental. If rental date has expired, a letter is sent (an obejt of the TenantLetter type), which is saved to an object of the Person class defining a specific tenant.
+Apartments and parking spaces also have start and end date of rental. If rental date has expired, a letter is sent (an obejt of the TenantLetter type), which is saved to an object of the model.Person class defining a specific tenant.
 
 The task should also implement a time-passing mechanism via threads. The thread should move the date forward 1 day every 5 seconds, simulating the passage of time. At the same time, rental issues should be checked every 10 seconds to see whether all rooms are still being rented or whether the room has already been rented. Ensure threads are synchronized.
 
 If the lease is renewed or the lease is canceled by the tenant, the debt letter is removed from the persons object.
 
-If the tenant does not renew the lease within 30 days. The room should be cleared, which lease was ended and the TenantLetter stays in the Person object. In the case of an apartment, we evict the people living in the apartment.
+If the tenant does not renew the lease within 30 days. The room should be cleared, which lease was ended and the TenantLetter stays in the model.Person object. In the case of an apartment, we evict the people living in the apartment.
 
 In the case of a parking space, we first check whether there is a vehicle in the parking space. If so, it is sold due to the expedited decision of the bailiff (from the point of view of the program, we remove the object from the room). If any items are stored on site, they are subject to disposal.
 
@@ -24,9 +24,9 @@ The person object has more than the information mentioned above, such as name, s
 
  If a person with more than three debts (at least 3 TenantLetter objects) wants to start the lease, there should be a ProblematicTenantException exception should be thrown with the message - "[NAME SURNAME] has rented rooms: [LIST OF ROOMS RENTED BEFORE]"
 
-Every item and vehicle has written information about its name and area it occupies. Area it occupies can be provided in two ways, as in case of room objects.
+Every item and vehicle has written information about its name and area it occupies. model.Area it occupies can be provided in two ways, as in case of room objects.
 
-Vehicles are divided into different types:
+Vehicles are divided into different model.types:
 - off-road car
 - city car
 - boat
@@ -44,7 +44,7 @@ The status of people living in the estate along with all data regarding the pers
 
 Operations of the program:
 
-in main method create residential area with at least 10 rooms of different types and sizes, and at least 5 people with pre-assigned rentals and items placed in parking spaces.
+in main method create residential area with at least 10 rooms of different model.types and sizes, and at least 5 people with pre-assigned rentals and items placed in parking spaces.
 
 after starting the program, the user should be able to invoke all the functionalities listed in the project via the command console.
 
