@@ -25,21 +25,15 @@ public class RentalDetails {
     private Person person;
 
     /**
-     * property that has been rented
-     */
-    private RentalObject rentalObject;
-
-    /**
      * counter to generate unique id on object creation
      */
     private static int rentalDetailsIdCounter = 0;
 
-    public RentalDetails(Date startDate, Date endDate, Person person, RentalObject rentalObject) {
+    public RentalDetails(Date startDate, Date endDate, Person person) {
         id = ++rentalDetailsIdCounter;
         this.startDate = startDate;
         this.endDate = endDate;
         this.person = person;
-        this.rentalObject = rentalObject;
     }
 
     public RentalDetails() {
@@ -72,13 +66,5 @@ public class RentalDetails {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public RentalObject getRentalObject() {
-        return rentalObject;
-    }
-
-    public void setRentalObject(RentalObject rentalObject) {
-        this.rentalObject = rentalObject;
     }
 }
