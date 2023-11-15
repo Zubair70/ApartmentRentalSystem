@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * to create a room object
  */
@@ -13,9 +15,14 @@ public class Room {
      */
     private Area size;
     /**
-     * how many things, this room can accommodate
+     * how many people, this room can accommodate
      */
     private int capacity;
+
+    /**
+     * people who have rented the room
+     */
+    private List<Person> rentalPersons;
 
     /**
      * room id counter to generate unique id on object creation
@@ -27,10 +34,11 @@ public class Room {
      * @param size size of the room
      * @param capacity how many things room can accommodate
      */
-    public Room(Area size, int capacity) {
+    public Room(Area size, int capacity, List<Person> rentalPersons) {
         id = ++roomIdCounter;
         this.size = size;
         this.capacity = capacity;
+        this.rentalPersons = rentalPersons;
     }
 
     /**

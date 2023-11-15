@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,19 +15,40 @@ public class Person {
     private int id;
 
     /**
-     * first name of the person
+     * username of the person for login
      */
-    private String firstName;
+    private String username;
 
     /**
-     * last name of the person
+     * password of the person for login
      */
-    private String lastName;
+    private String password;
 
     /**
-     * phone number of the person
+     * name of the person
      */
-    private String phoneNumber;
+    private String name;
+
+    /**
+     * surname of the person
+     */
+    private String surname;
+
+    /**
+     * PESEL number of the person
+     */
+    private String peselNumber;
+
+    /**
+     * address of the person
+     */
+    private String address;
+
+    private Date dateOfBirth;
+
+    private Apartment rentedApartment;
+
+    private ParkingSpace rentedParkingSpace;
 
     /**
      * tenant letters that were sent to the person
@@ -38,11 +60,14 @@ public class Person {
      */
     private static int personIdCounter = 0;
 
-    public Person(String firstName, String lastName, String phoneNumber) {
+    public Person(String username, String password, String name, String surname, String peselNumber, String address) {
         id = ++personIdCounter;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.peselNumber = peselNumber;
+        this.address = address;
         TENANT_LETTERS = new ArrayList<>();
     }
 
@@ -55,32 +80,57 @@ public class Person {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPeselNumber() {
+        return peselNumber;
+    }
+
+    public void setPeselNumber(String peselNumber) {
+        this.peselNumber = peselNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     /**
-     * Adds a tenantLetter in the apartment
+     * Adds a tenantLetter in the list
+     *
      * @param tenantLetter TenantLetter object to be added
      */
     public void addTenantLetter(TenantLetter tenantLetter) {
@@ -88,7 +138,8 @@ public class Person {
     }
 
     /**
-     * Removes a tenantLetter object from apartment
+     * Removes a tenantLetter object from list
+     *
      * @param tenantLetter TenantLetter object to be removed
      */
     public void removeTenantLetter(TenantLetter tenantLetter) {
@@ -97,6 +148,7 @@ public class Person {
 
     /**
      * Returns a tenantLetter object filtered by index
+     *
      * @param index index of the TenantLetter object
      * @return object of the TenantLetter
      */
@@ -106,6 +158,7 @@ public class Person {
 
     /**
      * Returns a TenantLetter object filtered by its unique identifier
+     *
      * @param id unique identifier of the TenantLetter object
      * @return object of the TenantLetter
      */
@@ -119,7 +172,8 @@ public class Person {
     /**
      * Returns the list of tenantLetters in apartment.<br>
      * Creates new arraylist everytime when called, so that, reference address must not match the original list
-     * @return Returns the list of tenantLetters in apartment.
+     *
+     * @return Returns the list of tenantLetters of the person.
      */
     public List<TenantLetter> getTENANT_LETTERS() {
         return new ArrayList<>(TENANT_LETTERS);

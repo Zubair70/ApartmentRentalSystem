@@ -1,72 +1,71 @@
 package model;
 
-import model.types.PropertyType;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Creates objects of Apartment to be rented
  */
-public class Apartment extends Property {
-    /**
-     * Rooms in an apartment
-     */
-    private final List<Room> ROOMS;
+public class Apartment {
 
-    public Apartment(PropertyType type) {
-        super(type);
-        ROOMS = new ArrayList<>();
+    /**
+     * unique id of the apartment
+     */
+    private int id;
+
+    /**
+     * area it occupies
+     */
+    private Area area;
+
+    /**
+     * floor number of apartment
+     */
+    private int floor;
+
+    /**
+     * tells if the apartment is rented or not
+     */
+    private boolean isRented;
+
+    /**
+     * counter to generate unique id on object creation
+     */
+    private static int apartmentIdCounter = 0;
+
+    public Apartment(Area area, int floor, boolean isRented) {
+        id = ++apartmentIdCounter;
+        this.area = area;
+        this.floor = floor;
+        this.isRented = isRented;
     }
 
     public Apartment() {
-        ROOMS = new ArrayList<>();
     }
 
-    /**
-     * Adds a room in the apartment
-     * @param room room object to be added
-     */
-    public void addRoom(Room room) {
-        ROOMS.add(room);
+    //Setters and Getters
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Removes a room object from apartment
-     * @param room room object to be removed
-     */
-    public void removeRoom(Room room) {
-        ROOMS.removeIf(r -> r.getId() == room.getId());
+    public Area getArea() {
+        return area;
     }
 
-    /**
-     * Returns a room object filtered by index
-     * @param index index of the room object
-     * @return object of the room
-     */
-    public Room getRoomByIndex(int index) {
-        return ROOMS.get(index);
+    public void setArea(Area area) {
+        this.area = area;
     }
 
-    /**
-     * Returns a room object filtered by its unique identifier
-     * @param id unique identifier of the room object
-     * @return object of the room
-     */
-    public Room getRoomById(int id) {
-        return ROOMS.stream()
-                .filter(room -> room.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public int getFloor() {
+        return floor;
     }
 
-    /**
-     * Returns the list of rooms in apartment.<br>
-     * Creates new arraylist everytime when called, so that, reference address must not match the original list
-     * @return Returns the list of rooms in apartment.
-     */
-    public List<Room> getRooms() {
-        return new ArrayList<>(ROOMS);
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
+    public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
+    }
 }

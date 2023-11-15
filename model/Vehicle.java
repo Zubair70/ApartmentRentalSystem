@@ -23,14 +23,20 @@ public abstract class Vehicle {
     private VehicleType type;
 
     /**
+     * occupied area of the vehicle
+     */
+    private Area area;
+
+    /**
      * counter to generate unique id on object creation
      */
     private static int vehicleIdCounter = 0;
 
-    protected Vehicle(String name, VehicleType type) {
+    protected Vehicle(String name, VehicleType type, Area area) {
         id = ++vehicleIdCounter;
         this.name = name;
         this.type = type;
+        this.area = area;
     }
 
     public Vehicle() {
@@ -53,7 +59,15 @@ public abstract class Vehicle {
         return type;
     }
 
-    protected void setType(VehicleType type) {
+    public void setType(VehicleType type) {
         this.type = type;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }

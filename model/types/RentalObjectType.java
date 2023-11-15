@@ -3,12 +3,12 @@ package model.types;
 /**
  * Types of properties that can be rented
  */
-public enum PropertyType {
+public enum RentalObjectType {
     APARTMENT("Apartment"), PARKING_SPACE("Parking Space");
 
     private final String type;
 
-    PropertyType(String type) {
+    RentalObjectType(String type) {
         this.type = type;
     }
 
