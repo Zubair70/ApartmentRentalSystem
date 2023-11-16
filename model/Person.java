@@ -44,10 +44,19 @@ public class Person {
      */
     private String address;
 
+    /**
+     * Date of birth of the person
+     */
     private Date dateOfBirth;
 
+    /**
+     * apartment rented by the person
+     */
     private Apartment rentedApartment;
 
+    /**
+     * parking space rented by the person
+     */
     private ParkingSpace rentedParkingSpace;
 
     /**
@@ -60,7 +69,8 @@ public class Person {
      */
     private static int personIdCounter = 0;
 
-    public Person(String username, String password, String name, String surname, String peselNumber, String address) {
+    public Person(String username, String password, String name, String surname,
+                  String peselNumber, String address, Date dateOfBirth, Apartment rentedApartment, ParkingSpace rentedParkingSpace) {
         id = ++personIdCounter;
         this.username = username;
         this.password = password;
@@ -68,6 +78,9 @@ public class Person {
         this.surname = surname;
         this.peselNumber = peselNumber;
         this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.rentedApartment = rentedApartment;
+        this.rentedParkingSpace = rentedParkingSpace;
         TENANT_LETTERS = new ArrayList<>();
     }
 
@@ -126,6 +139,30 @@ public class Person {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Apartment getRentedApartment() {
+        return rentedApartment;
+    }
+
+    public void setRentedApartment(Apartment rentedApartment) {
+        this.rentedApartment = rentedApartment;
+    }
+
+    public ParkingSpace getRentedParkingSpace() {
+        return rentedParkingSpace;
+    }
+
+    public void setRentedParkingSpace(ParkingSpace rentedParkingSpace) {
+        this.rentedParkingSpace = rentedParkingSpace;
     }
 
     /**

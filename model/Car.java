@@ -27,8 +27,8 @@ public class Car extends Vehicle {
      */
     private GasType gasType;
 
-    public Car(String name, VehicleType type, String model, int seatingCapacity, String color, GasType gasType) {
-        super(name, type);
+    public Car(String name, VehicleType type, Area area, String model, int seatingCapacity, String color, GasType gasType) {
+        super(name, type, area);
         this.model = model;
         this.seatingCapacity = seatingCapacity;
         this.color = color;

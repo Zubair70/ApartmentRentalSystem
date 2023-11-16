@@ -11,8 +11,8 @@ public class Boat extends Vehicle{
      */
     private boolean isWithEngine;
 
-    public Boat(String name, VehicleType type, boolean isWithEngine) {
-        super(name, type);
+    public Boat(String name, VehicleType type, Area area, boolean isWithEngine) {
+        super(name, type, area);
         this.isWithEngine = isWithEngine;
     }
 

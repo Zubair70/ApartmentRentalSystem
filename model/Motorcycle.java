@@ -17,8 +17,8 @@ public class Motorcycle extends Vehicle{
      */
     private String engineSize;
 
-    public Motorcycle(String name, VehicleType type, boolean isHeavyBike, String engineSize) {
-        super(name, type);
+    public Motorcycle(String name, VehicleType type, Area area, boolean isHeavyBike, String engineSize) {
+        super(name, type, area);
         this.isHeavyBike = isHeavyBike;
         this.engineSize = engineSize;
     }

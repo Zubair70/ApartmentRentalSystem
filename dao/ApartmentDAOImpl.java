@@ -7,18 +7,15 @@ import model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomDAOImpl implements HandlerDAO<Room>{
-    private static final List<Room> ROOMS = new ArrayList<>();
-    private PersonDAOImpl personDAO;
+public class ApartmentDAOImpl implements HandlerDAO<Apartment> {
+    private static final List<Apartment> APARTMENTS = new ArrayList<>();
 
-    public RoomDAOImpl() throws Exception {
+    public ApartmentDAOImpl() throws Exception {
         //loads data in the list only one time
-        if(ROOMS.isEmpty()) {
-            personDAO = new PersonDAOImpl();
-
+        if(APARTMENTS.isEmpty()) {
             List<String> data = FileHandler.fetchData();
             data.forEach(line -> {
-                if (line.startsWith(IConstants.ROOM_RECORD)) {
+                if (line.startsWith(IConstants.APARTMENT_RECORD)) {
                     String[] lineParts = line.split(IConstants.VALUE_SEPARATOR);
                     Area area = null;
                     if (!lineParts[0].equals(IConstants.NULL_RECORD)) {
@@ -29,14 +26,11 @@ public class RoomDAOImpl implements HandlerDAO<Room>{
                             area = new Dimension("Dimension", Double.parseDouble(areaParts[0]), Double.parseDouble(areaParts[1]), Double.parseDouble(areaParts[2]));
                         }
                     }
-                    Room newRoom = new Room(area, Integer.parseInt(lineParts[1]), Boolean.parseBoolean(lineParts[2]));
+                    List<Room> rooms = null;
                     if (!lineParts[3].equals(IConstants.NULL_RECORD)) {
-                        String[] recordParts = lineParts[0].substring(1).split(IConstants.SUB_VALUE_SEPARATOR);
-                        for(String rec : recordParts) {
-                            newRoom.addPerson(personDAO.getById(Integer.parseInt(rec)));
-                        }
+                        String[] roomParts = lineParts[0].substring(1).split(IConstants.SUB_VALUE_SEPARATOR);
                     }
-                    ROOMS.add(newRoom);
+                    APARTMENTS.add(new Apartment(area, Integer.parseInt(lineParts[1]), Boolean.parseBoolean(lineParts[2])));
                 }
             });
         }
@@ -44,44 +38,44 @@ public class RoomDAOImpl implements HandlerDAO<Room>{
 
     @Override
     public int size() {
-        return ROOMS.size();
+        return APARTMENTS.size();
     }
 
     @Override
-    public boolean save(Room obj) {
-        return ROOMS.add(obj);
+    public boolean save(Apartment obj) {
+        return APARTMENTS.add(obj);
     }
 
     @Override
-    public Room getByIndex(int index) {
-        return ROOMS.get(index);
+    public Apartment getByIndex(int index) {
+        return APARTMENTS.get(index);
     }
 
     @Override
-    public Room getById(int id) {
-        return ROOMS.stream()
+    public Apartment getById(int id) {
+        return APARTMENTS.stream()
                 .filter(person -> person.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public boolean updateByIndex(int index, Room obj) {
-        return ROOMS.set(index, obj) != null;
+    public boolean updateByIndex(int index, Apartment obj) {
+        return APARTMENTS.set(index, obj) != null;
     }
 
     @Override
-    public boolean updateById(int id, Room obj) {
-        return ROOMS.set(ROOMS.indexOf(getById(id)), obj) != null;
+    public boolean updateById(int id, Apartment obj) {
+        return APARTMENTS.set(APARTMENTS.indexOf(getById(id)), obj) != null;
     }
 
     @Override
     public boolean deleteByIndex(int index) {
-        return ROOMS.remove(index) != null;
+        return APARTMENTS.remove(index) != null;
     }
 
     @Override
     public boolean deleteById(int id) {
-        return ROOMS.remove(ROOMS.indexOf(getById(id))) != null;
+        return APARTMENTS.remove(APARTMENTS.indexOf(getById(id))) != null;
     }
 }
