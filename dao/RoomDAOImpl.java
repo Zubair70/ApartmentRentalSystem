@@ -15,7 +15,6 @@ public class RoomDAOImpl implements HandlerDAO<Room>{
         //loads data in the list only one time
         if(ROOMS.isEmpty()) {
             personDAO = new PersonDAOImpl();
-
             List<String> data = FileHandler.fetchData();
             data.forEach(line -> {
                 if (line.startsWith(IConstants.ROOM_RECORD)) {
@@ -29,11 +28,11 @@ public class RoomDAOImpl implements HandlerDAO<Room>{
                             area = new Dimension("Dimension", Double.parseDouble(areaParts[0]), Double.parseDouble(areaParts[1]), Double.parseDouble(areaParts[2]));
                         }
                     }
-                    Room newRoom = new Room(area, Integer.parseInt(lineParts[1]), Boolean.parseBoolean(lineParts[2]));
+                    Room newRoom = new Room(area, Boolean.parseBoolean(lineParts[2]), Integer.parseInt(lineParts[1]));
                     if (!lineParts[3].equals(IConstants.NULL_RECORD)) {
                         String[] recordParts = lineParts[0].substring(1).split(IConstants.SUB_VALUE_SEPARATOR);
                         for(String rec : recordParts) {
-                            newRoom.addPerson(personDAO.getById(Integer.parseInt(rec)));
+                            newRoom.addRentalPerson(personDAO.getById(Integer.parseInt(rec)));
                         }
                     }
                     ROOMS.add(newRoom);

@@ -50,14 +50,9 @@ public class Person {
     private Date dateOfBirth;
 
     /**
-     * apartment rented by the person
+     * spaces rented by the person
      */
-    private Apartment rentedApartment;
-
-    /**
-     * parking space rented by the person
-     */
-    private ParkingSpace rentedParkingSpace;
+    private List<Space> RENTED_SPACES;
 
     /**
      * tenant letters that were sent to the person
@@ -70,7 +65,7 @@ public class Person {
     private static int personIdCounter = 0;
 
     public Person(String username, String password, String name, String surname,
-                  String peselNumber, String address, Date dateOfBirth, Apartment rentedApartment, ParkingSpace rentedParkingSpace) {
+                  String peselNumber, String address, Date dateOfBirth) {
         id = ++personIdCounter;
         this.username = username;
         this.password = password;
@@ -79,12 +74,12 @@ public class Person {
         this.peselNumber = peselNumber;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
-        this.rentedApartment = rentedApartment;
-        this.rentedParkingSpace = rentedParkingSpace;
+        RENTED_SPACES = new ArrayList<>();
         TENANT_LETTERS = new ArrayList<>();
     }
 
     public Person() {
+        RENTED_SPACES = new ArrayList<>();
         TENANT_LETTERS = new ArrayList<>();
     }
 
@@ -149,20 +144,55 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Apartment getRentedApartment() {
-        return rentedApartment;
+    /**
+     * Adds a Space in the list
+     *
+     * @param space Space object to be added
+     */
+    public void addRentedSpace(Space space) {
+        RENTED_SPACES.add(space);
     }
 
-    public void setRentedApartment(Apartment rentedApartment) {
-        this.rentedApartment = rentedApartment;
+    /**
+     * Removes a Space object from list
+     *
+     * @param space Space object to be removed
+     */
+    public void removeRentedSpace(Space space) {
+        RENTED_SPACES.removeIf(s -> s.getId() == space.getId());
     }
 
-    public ParkingSpace getRentedParkingSpace() {
-        return rentedParkingSpace;
+    /**
+     * Returns a Space object filtered by index
+     *
+     * @param index index of the Space object
+     * @return object of the Space
+     */
+    public Space getRentedSpaceByIndex(int index) {
+        return RENTED_SPACES.get(index);
     }
 
-    public void setRentedParkingSpace(ParkingSpace rentedParkingSpace) {
-        this.rentedParkingSpace = rentedParkingSpace;
+    /**
+     * Returns a Space object filtered by its unique identifier
+     *
+     * @param id unique identifier of the Space object
+     * @return object of the Space
+     */
+    public Space getRentedSpaceById(int id) {
+        return RENTED_SPACES.stream()
+                .filter(letter -> letter.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    /**
+     * Returns the list of rented spaces.<br>
+     * Creates new arraylist everytime when called, so that, reference address must not match the original list
+     *
+     * @return Returns the list of rented spaces of the person.
+     */
+    public List<Space> getRentedSpaces() {
+        return new ArrayList<>(RENTED_SPACES);
     }
 
     /**
@@ -207,12 +237,12 @@ public class Person {
     }
 
     /**
-     * Returns the list of tenantLetters in apartment.<br>
+     * Returns the list of tenantLetters.<br>
      * Creates new arraylist everytime when called, so that, reference address must not match the original list
      *
      * @return Returns the list of tenantLetters of the person.
      */
-    public List<TenantLetter> getTENANT_LETTERS() {
+    public List<TenantLetter> getTenantLetters() {
         return new ArrayList<>(TENANT_LETTERS);
     }
 }

@@ -26,11 +26,7 @@ public class ApartmentDAOImpl implements HandlerDAO<Apartment> {
                             area = new Dimension("Dimension", Double.parseDouble(areaParts[0]), Double.parseDouble(areaParts[1]), Double.parseDouble(areaParts[2]));
                         }
                     }
-                    List<Room> rooms = null;
-                    if (!lineParts[3].equals(IConstants.NULL_RECORD)) {
-                        String[] roomParts = lineParts[0].substring(1).split(IConstants.SUB_VALUE_SEPARATOR);
-                    }
-                    APARTMENTS.add(new Apartment(area, Integer.parseInt(lineParts[1]), Boolean.parseBoolean(lineParts[2])));
+                    APARTMENTS.add(new Apartment(area, Boolean.parseBoolean(lineParts[2]), Integer.parseInt(lineParts[1])));
                 }
             });
         }

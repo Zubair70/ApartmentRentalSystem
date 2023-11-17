@@ -10,10 +10,14 @@ import java.util.List;
 public class ParkingSpaceDAOImpl implements HandlerDAO<ParkingSpace> {
     private static final List<ParkingSpace> PARKING_SPACES = new ArrayList<>();
     private VehicleDAOImpl vehicleDAO;
+    private ItemDAOImpl itemDAO;
+    private PersonDAOImpl personDAO;
 
     public ParkingSpaceDAOImpl() throws Exception {
         if(PARKING_SPACES.isEmpty()) {
             vehicleDAO = new VehicleDAOImpl();
+            itemDAO = new ItemDAOImpl();
+            personDAO = new PersonDAOImpl();
             List<String> data = FileHandler.fetchData();
             data.forEach(line -> {
                 if(line.startsWith(IConstants.PARKING_SPACE_RECORD)) {
@@ -29,10 +33,21 @@ public class ParkingSpaceDAOImpl implements HandlerDAO<ParkingSpace> {
                     }
 
                     Vehicle vehicle = null;
-                    if (!lineParts[1].equals(IConstants.NULL_RECORD)) {
-                        vehicle = vehicleDAO.getById(Integer.parseInt(lineParts[1]));
+                    if (!lineParts[2].equals(IConstants.NULL_RECORD)) {
+                        vehicle = vehicleDAO.getById(Integer.parseInt(lineParts[2]));
                     }
-                    PARKING_SPACES.add(new ParkingSpace(size, vehicle, Boolean.parseBoolean(lineParts[2])));
+                    Person rentedBy = null;
+                    if (!lineParts[3].equals(IConstants.NULL_RECORD)) {
+                        rentedBy = personDAO.getById(Integer.parseInt(lineParts[3]));
+                    }
+                    ParkingSpace newParkingSpace = new ParkingSpace(size, Boolean.parseBoolean(lineParts[1]), vehicle, rentedBy);
+                    if (!lineParts[3].equals(IConstants.NULL_RECORD)) {
+                        String[] recordParts = lineParts[3].substring(1).split(IConstants.SUB_VALUE_SEPARATOR);
+                        for(String rec : recordParts) {
+                            newParkingSpace.addItem(itemDAO.getById(Integer.parseInt(rec)));
+                        }
+                    }
+                    PARKING_SPACES.add(newParkingSpace);
                 }
             });
         }

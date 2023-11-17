@@ -5,6 +5,7 @@ import dao.file_handler.FileHandler;
 import model.Apartment;
 import model.ParkingSpace;
 import model.Person;
+import model.Space;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,15 +31,11 @@ public class PersonDAOImpl implements HandlerDAO<Person> {
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Integer.parseInt(dateParts[2]), Integer.parseInt(dateParts[1]) - 1, Integer.parseInt(dateParts[0]));
                     Date dateOfBirth = calendar.getTime();
-                    Apartment apartment = null;
+                    Space space = null;
                     if (!lineParts[7].equals(IConstants.NULL_RECORD)) {
-                        apartment = apartmentDAO.getById(Integer.parseInt(lineParts[7]));
+                        space = apartmentDAO.getById(Integer.parseInt(lineParts[7]));
                     }
-                    ParkingSpace parkingSpace = null;
-                    if (!lineParts[8].equals(IConstants.NULL_RECORD)) {
-                        parkingSpace = parkingSpaceDAO.getById(Integer.parseInt(lineParts[8]));
-                    }
-                    PERSONS.add(new Person(lineParts[0], lineParts[1], lineParts[2], lineParts[3], lineParts[4], lineParts[5], dateOfBirth, apartment, parkingSpace));
+                    PERSONS.add(new Person(lineParts[0], lineParts[1], lineParts[2], lineParts[3], lineParts[4], lineParts[5], dateOfBirth, space, parkingSpace));
                 }
             });
         }

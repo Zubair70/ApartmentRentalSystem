@@ -6,15 +6,7 @@ import java.util.List;
 /**
  * to create a room object
  */
-public class Room {
-    /**
-     * unique identifier of the room
-     */
-    private int id;
-    /**
-     * size of the room i.e. in terms of volume or dimension
-     */
-    private Area size;
+public class Room extends Space{
     /**
      * how many people, this room can accommodate
      */
@@ -28,21 +20,14 @@ public class Room {
     private final List<Person> RENTAL_PERSONS;
 
     /**
-     * room id counter to generate unique id on object creation
-     */
-    private static int roomIdCounter = 0;
-
-    /**
      * creates new object and initializes instance variable
      * @param size size of the room
-     * @param capacity how many things room can accommodate
      * @param isRented tells if the room is rented or not
+     * @param capacity how many things room can accommodate
      */
-    public Room(Area size, int capacity, boolean isRented) {
-        id = ++roomIdCounter;
-        this.size = size;
+    public Room(Area size, boolean isRented, int capacity) {
+        super(size, isRented);
         this.capacity = capacity;
-        this.isRented = isRented;
         RENTAL_PERSONS = new ArrayList<>();
     }
 
@@ -54,18 +39,6 @@ public class Room {
     }
 
     //Setters and Getters
-    public int getId() {
-        return id;
-    }
-
-    public Area getSize() {
-        return size;
-    }
-
-    public void setSize(Area size) {
-        this.size = size;
-    }
-
     public int getCapacity() {
         return capacity;
     }
@@ -86,7 +59,7 @@ public class Room {
      * Adds a person in the apartment
      * @param person person object to be added
      */
-    public void addPerson(Person person) {
+    public void addRentalPerson(Person person) {
         RENTAL_PERSONS.add(person);
     }
 
@@ -94,7 +67,7 @@ public class Room {
      * Removes a person object from apartment
      * @param person person object to be removed
      */
-    public void removePerson(Person person) {
+    public void removeRentalPerson(Person person) {
         RENTAL_PERSONS.removeIf(r -> r.getId() == person.getId());
     }
 
@@ -103,7 +76,7 @@ public class Room {
      * @param index index of the person object
      * @return object of the person
      */
-    public Person getPersonByIndex(int index) {
+    public Person getRentalPersonByIndex(int index) {
         return RENTAL_PERSONS.get(index);
     }
 
@@ -112,7 +85,7 @@ public class Room {
      * @param id unique identifier of the person object
      * @return object of the person
      */
-    public Person getPersonById(int id) {
+    public Person getRentalPersonById(int id) {
         return RENTAL_PERSONS.stream()
                 .filter(person -> person.getId() == id)
                 .findFirst()
@@ -124,7 +97,7 @@ public class Room {
      * Creates new arraylist everytime when called, so that, original list can't be changed
      * @return Returns the list of rental persons in apartment.
      */
-    public List<Person> getPersons() {
+    public List<Person> getRentalPersons() {
         return new ArrayList<>(RENTAL_PERSONS);
     }
 }

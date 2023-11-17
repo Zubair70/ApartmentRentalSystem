@@ -6,16 +6,7 @@ import java.util.List;
 /**
  * Creates objects of ParkingSpace to be rented
  */
-public class ParkingSpace {
-
-    private int id;
-
-    private boolean isRented;
-
-    /**
-     * size of the parking space in dimension or volume
-     */
-    private Area size;
+public class ParkingSpace extends Space {
 
     /**
      * vehicle stored in the parking space
@@ -23,20 +14,19 @@ public class ParkingSpace {
     private Vehicle vehicle;
 
     /**
+     * Person rented by
+     */
+    private Person rentedBy;
+
+    /**
      * item(s) stored in the parking space
      */
     private List<Item> ITEMS;
 
-    /**
-     * counter to generate unique id on object creation
-     */
-    private static int parkingSpaceIdCounter = 0;
-
-    public ParkingSpace(Area size, Vehicle vehicle, boolean isRented) {
-        id = ++parkingSpaceIdCounter;
-        this.size = size;
+    public ParkingSpace(Area size, boolean isRented, Vehicle vehicle, Person rentedBy) {
+        super(size, isRented);
         this.vehicle = vehicle;
-        this.isRented = isRented;
+        this.rentedBy = rentedBy;
         ITEMS = new ArrayList<>();
     }
 
@@ -45,18 +35,6 @@ public class ParkingSpace {
     }
 
     //Setters and Getters
-    public int getId() {
-        return id;
-    }
-
-    public Area getSize() {
-        return size;
-    }
-
-    public void setSize(Area size) {
-        this.size = size;
-    }
-
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -65,12 +43,12 @@ public class ParkingSpace {
         this.vehicle = vehicle;
     }
 
-    public boolean isRented() {
-        return isRented;
+    public Person getRentedBy() {
+        return rentedBy;
     }
 
-    public void setRented(boolean rented) {
-        isRented = rented;
+    public void setRentedBy(Person rentedBy) {
+        this.rentedBy = rentedBy;
     }
 
     /**
