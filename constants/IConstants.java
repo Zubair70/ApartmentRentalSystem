@@ -13,6 +13,8 @@ public class IConstants {
     public static final String CAR_RECORD = "car:";
     public static final String BOAT_RECORD = "boat:";
     public static final String MOTORCYCLE_RECORD = "motorcycle:";
+    public static final String ITEM_RECORD = "item:";
+    public static final String TENANT_LETTER_RECORD = "tenant_letter:";
     public static final String VOLUME = "volume:";
     public static final String DIMENSION = "dimension:";
     public static final String NULL_RECORD = "null";

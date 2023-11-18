@@ -3,6 +3,11 @@ package dao;
 public interface HandlerDAO<T> {
 
     /**
+     * Loads the data
+     */
+    public void loadData() throws Exception;
+
+    /**
      * Retrieves the size of the list
      * @return size of the list
      */
@@ -65,4 +70,9 @@ public interface HandlerDAO<T> {
      * @return @return true, if the list updates
      */
     public boolean deleteById(int id);
+
+    /**
+     * Updates the data in the file
+     */
+    public void updateData() throws Exception;
 }

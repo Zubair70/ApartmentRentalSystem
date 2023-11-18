@@ -43,6 +43,11 @@ public abstract class Vehicle {
     }
 
     //Setters and Getters
+    public void setId(int id) {
+        vehicleIdCounter += id;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

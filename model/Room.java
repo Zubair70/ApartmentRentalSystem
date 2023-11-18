@@ -1,18 +1,17 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * to create a room object
  */
-public class Room extends Space{
+public class Room extends Space {
     /**
      * how many people, this room can accommodate
      */
     private int capacity;
-
-    private boolean isRented;
 
     /**
      * people who have rented the room
@@ -21,12 +20,13 @@ public class Room extends Space{
 
     /**
      * creates new object and initializes instance variable
-     * @param size size of the room
+     *
+     * @param size     size of the room
      * @param isRented tells if the room is rented or not
      * @param capacity how many things room can accommodate
      */
-    public Room(Area size, boolean isRented, int capacity) {
-        super(size, isRented);
+    public Room(Area size, boolean isRented, Date startDate, Date endDate, int capacity) {
+        super(size, isRented, startDate, endDate);
         this.capacity = capacity;
         RENTAL_PERSONS = new ArrayList<>();
     }
@@ -47,24 +47,23 @@ public class Room extends Space{
         this.capacity = capacity;
     }
 
-    public boolean isRented() {
-        return isRented;
-    }
-
-    public void setRented(boolean rented) {
-        isRented = rented;
-    }
-
     /**
      * Adds a person in the apartment
+     *
      * @param person person object to be added
      */
-    public void addRentalPerson(Person person) {
+    public boolean addRentalPerson(Person person) {
+        if(RENTAL_PERSONS.size() == capacity) {
+            System.out.println("This room cannot accommodate more people.");
+            return false;
+        }
         RENTAL_PERSONS.add(person);
+        return true;
     }
 
     /**
      * Removes a person object from apartment
+     *
      * @param person person object to be removed
      */
     public void removeRentalPerson(Person person) {
@@ -73,6 +72,7 @@ public class Room extends Space{
 
     /**
      * Returns a person object filtered by index
+     *
      * @param index index of the person object
      * @return object of the person
      */
@@ -82,6 +82,7 @@ public class Room extends Space{
 
     /**
      * Returns a person object filtered by its unique identifier
+     *
      * @param id unique identifier of the person object
      * @return object of the person
      */
@@ -95,6 +96,7 @@ public class Room extends Space{
     /**
      * Returns the list of rental persons in apartment.<br>
      * Creates new arraylist everytime when called, so that, original list can't be changed
+     *
      * @return Returns the list of rental persons in apartment.
      */
     public List<Person> getRentalPersons() {

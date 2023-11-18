@@ -1,6 +1,9 @@
 package model;
 
+import exception.TooManyThingsException;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +26,8 @@ public class ParkingSpace extends Space {
      */
     private List<Item> ITEMS;
 
-    public ParkingSpace(Area size, boolean isRented, Vehicle vehicle, Person rentedBy) {
-        super(size, isRented);
+    public ParkingSpace(Area size, boolean isRented, Date startDate, Date endDate, Vehicle vehicle, Person rentedBy) {
+        super(size, isRented, startDate, endDate);
         this.vehicle = vehicle;
         this.rentedBy = rentedBy;
         ITEMS = new ArrayList<>();
@@ -55,8 +58,55 @@ public class ParkingSpace extends Space {
      * Adds an item in the apartment
      * @param item Item type object to be added
      */
-    public void addItem(Item item) {
-        ITEMS.add(item);
+    public void addItem(Item item) throws TooManyThingsException {
+        double totalOccupiedVolume = getTotalOccupiedVolume();
+        double itemVolume = 0;
+        if(item.getSize().getType().equals("Volume")) {
+            itemVolume += ((Volume) item.getSize()).getValue();
+        } else {
+            itemVolume += ((Dimension) item.getSize()).getLength()
+                    * ((Dimension) item.getSize()).getWidth()
+                    * ((Dimension) item.getSize()).getHeight();
+        }
+
+        double parkingSpaceVolume = 0;
+        if(getSize().getType().equals("Volume")) {
+            itemVolume += ((Volume) getSize()).getValue();
+        } else {
+            itemVolume += ((Dimension) getSize()).getLength()
+                    * ((Dimension) getSize()).getWidth()
+                    * ((Dimension) getSize()).getHeight();
+        }
+        if((totalOccupiedVolume + itemVolume) < parkingSpaceVolume) {
+            ITEMS.add(item);
+        } else {
+            throw new TooManyThingsException("Remove some old items to insert a new item");
+        }
+    }
+
+    private double getTotalOccupiedVolume() {
+        double totalOccupiedVolume = 0;
+        if(vehicle != null) {
+            if(vehicle.getSize().getType().equals("Volume")) {
+                totalOccupiedVolume += ((Volume) vehicle.getSize()).getValue();
+            } else {
+                totalOccupiedVolume += ((Dimension) vehicle.getSize()).getLength()
+                        * ((Dimension) vehicle.getSize()).getWidth()
+                        * ((Dimension) vehicle.getSize()).getHeight();
+            }
+        }
+        if(!ITEMS.isEmpty()) {
+            for (Item i: ITEMS) {
+                if(i.getSize().getType().equals("Volume")) {
+                    totalOccupiedVolume += ((Volume) i.getSize()).getValue();
+                } else {
+                    totalOccupiedVolume += ((Dimension) i.getSize()).getLength()
+                            * ((Dimension) i.getSize()).getWidth()
+                            * ((Dimension) i.getSize()).getHeight();
+                }
+            }
+        }
+        return totalOccupiedVolume;
     }
 
     /**

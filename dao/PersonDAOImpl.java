@@ -2,10 +2,7 @@ package dao;
 
 import constants.IConstants;
 import dao.file_handler.FileHandler;
-import model.Apartment;
-import model.ParkingSpace;
-import model.Person;
-import model.Space;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,28 +11,49 @@ import java.util.List;
 
 public class PersonDAOImpl implements HandlerDAO<Person> {
     private static final List<Person> PERSONS = new ArrayList<>();
-    private ApartmentDAOImpl apartmentDAO;
-    private ParkingSpaceDAOImpl parkingSpaceDAO;
+    private SpaceDAOImpl spaceDAO;
 
-    public PersonDAOImpl() throws Exception {
+    @Override
+    public void loadData() throws Exception {
         //loads data in the list only one time
         if (PERSONS.isEmpty()) {
-            apartmentDAO = new ApartmentDAOImpl();
-            parkingSpaceDAO = new ParkingSpaceDAOImpl();
+            spaceDAO = new SpaceDAOImpl();
 
             List<String> data = FileHandler.fetchData();
             data.forEach(line -> {
                 if (line.startsWith(IConstants.PERSON_RECORD)) {
-                    String[] lineParts = line.split(IConstants.VALUE_SEPARATOR);
-                    String[] dateParts = lineParts[6].split(IConstants.DATE_SEPARATOR); // dd/mm/yyyy
+                    String[] lineParts = line.replace(IConstants.PERSON_RECORD, "").split(IConstants.VALUE_SEPARATOR);
+
+                    Person newPerson = new Person();
+                    newPerson.setId(Integer.parseInt(lineParts[0]));
+                    newPerson.setUsername(lineParts[1]);
+                    newPerson.setPassword(lineParts[2]);
+                    newPerson.setName(lineParts[3]);
+                    newPerson.setSurname(lineParts[4]);
+                    newPerson.setPeselNumber(lineParts[5]);
+                    newPerson.setAddress(lineParts[6]);
+
+                    String[] dateParts = lineParts[7].split(IConstants.DATE_SEPARATOR); // dd/mm/yyyy
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Integer.parseInt(dateParts[2]), Integer.parseInt(dateParts[1]) - 1, Integer.parseInt(dateParts[0]));
                     Date dateOfBirth = calendar.getTime();
-                    Space space = null;
-                    if (!lineParts[7].equals(IConstants.NULL_RECORD)) {
-                        space = apartmentDAO.getById(Integer.parseInt(lineParts[7]));
+
+                    newPerson.setDateOfBirth(dateOfBirth);
+
+                    if (!lineParts[8].equals(IConstants.NULL_RECORD)) {
+                        String[] recordParts = lineParts[8].split(IConstants.SUB_VALUE_SEPARATOR);
+                        for(String rec : recordParts) {
+                            newPerson.addRentedSpace(spaceDAO.getById(Integer.parseInt(rec)));
+                        }
                     }
-                    PERSONS.add(new Person(lineParts[0], lineParts[1], lineParts[2], lineParts[3], lineParts[4], lineParts[5], dateOfBirth, space, parkingSpace));
+
+                    if (!lineParts[9].equals(IConstants.NULL_RECORD)) {
+                        String[] recordParts = lineParts[9].replace(IConstants.TENANT_LETTER_RECORD, "").split(IConstants.SUB_VALUE_SEPARATOR);
+                        for(String rec : recordParts) {
+                            newPerson.addTenantLetter(new TenantLetter(rec));
+                        }
+                    }
+                    PERSONS.add(newPerson);
                 }
             });
         }
@@ -89,5 +107,68 @@ public class PersonDAOImpl implements HandlerDAO<Person> {
                 .filter(person -> person.getUsername().equals(username) && person.getPassword().equals(password))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void updateData() throws Exception {
+        StringBuilder stringBuilder = new StringBuilder();
+        Person person;
+        Calendar calendar;
+        for (int i = 0; i < PERSONS.size(); i++) {
+            person = PERSONS.get(i);
+            stringBuilder.append(IConstants.PERSON_RECORD);
+            stringBuilder.append(person.getId());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getUsername());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getPassword());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getName());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getSurname());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getPeselNumber());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+            stringBuilder.append(person.getAddress());
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+
+            calendar = Calendar.getInstance();
+            calendar.setTime(person.getDateOfBirth());
+            stringBuilder.append(calendar.get(Calendar.DATE));
+            stringBuilder.append(IConstants.DATE_SEPARATOR);
+            stringBuilder.append(calendar.get(Calendar.MONTH) + 1);
+            stringBuilder.append(IConstants.DATE_SEPARATOR);
+            stringBuilder.append(calendar.get(Calendar.YEAR));
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+
+            if(person.getRentedSpaces().isEmpty()) {
+                stringBuilder.append(IConstants.NULL_RECORD);
+            } else {
+                List<Space> rentedSpaces= person.getRentedSpaces();
+                for (int j = 0; j < rentedSpaces.size(); j++) {
+                    stringBuilder.append(rentedSpaces.get(j).getId());
+                    if(j < rentedSpaces.size() - 1) {
+                        stringBuilder.append(IConstants.SUB_VALUE_SEPARATOR);
+                    }
+                }
+            }
+            stringBuilder.append(IConstants.VALUE_SEPARATOR);
+
+            if(person.getTenantLetters().isEmpty()) {
+                stringBuilder.append(IConstants.NULL_RECORD);
+            } else {
+                List<TenantLetter> tenantLetters = person.getTenantLetters();
+                for (int j = 0; j < tenantLetters.size(); j++) {
+                    stringBuilder.append(tenantLetters.get(j).getId());
+                    if(j < tenantLetters.size() - 1) {
+                        stringBuilder.append(IConstants.SUB_VALUE_SEPARATOR);
+                    }
+                }
+            }
+
+            if(i < PERSONS.size() - 1) {
+                stringBuilder.append("\n");
+            }
+        }
+        FileHandler.updateFile(stringBuilder.toString());
     }
 }

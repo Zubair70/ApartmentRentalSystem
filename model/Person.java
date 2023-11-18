@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Creates objects of person
@@ -84,6 +85,11 @@ public class Person {
     }
 
     //Setters and Getters
+    public void setId(int id) {
+        personIdCounter += id;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -149,8 +155,21 @@ public class Person {
      *
      * @param space Space object to be added
      */
-    public void addRentedSpace(Space space) {
+    public boolean addRentedSpace(Space space) {
+        long totalRentedApartments = RENTED_SPACES.stream()
+                .filter(rentedSpace -> rentedSpace instanceof Apartment)
+                .count();
+        long totalRentedParkingSpaces = RENTED_SPACES.stream()
+                .filter(rentedSpace -> rentedSpace instanceof ParkingSpace)
+                .count();
+        if((totalRentedApartments + totalRentedParkingSpaces) == 5) {
+            System.out.println("Cannot rent another space, " +
+                    "Total Rented Apartments: " + totalRentedApartments +
+                    ", Total Rented Parking Spaces: " + totalRentedParkingSpaces);
+            return false;
+        }
         RENTED_SPACES.add(space);
+        return true;
     }
 
     /**

@@ -29,6 +29,10 @@ public class TenantLetter {
     }
 
     //Setters and Getters
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

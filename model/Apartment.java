@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,10 +18,13 @@ public class Apartment extends Space {
      */
     private Person rentedBy;
 
-    public Apartment(Area area, boolean isRented, int floor, Person rentedBy) {
-        super(area, isRented);
+    public Apartment(Area area, boolean isRented, Date startDate, Date endDate, int floor, Person rentedBy) {
+        super(area, isRented, startDate, endDate);
         this.floor = floor;
         this.rentedBy = rentedBy;
+    }
+
+    public Apartment() {
     }
 
     //Setters and Getters

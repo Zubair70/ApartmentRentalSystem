@@ -3,7 +3,7 @@ package model;
 /**
  * Dimension area type for the size of the room or parking space
  */
-public class Dimension extends Area{
+public class Dimension extends Area {
 
     /**
      * length of the room
@@ -51,5 +51,10 @@ public class Dimension extends Area{
 
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    @Override
+    public String toString() {
+        return length + "m x" + width + "m x" + height + "m";
     }
 }

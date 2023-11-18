@@ -32,6 +32,11 @@ public class Item {
     }
 
     //Setters and Getters
+    public void setId(int id) {
+        itemIdCounter += id;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
